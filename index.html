@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Aura Esports — India's Ultimate Free Fire Tournament Platform</title>
+<meta name="description" content="Aura Esports is India's ultimate Free Fire tournament platform. Join daily Solo, Duo & Squad tournaments, win real cash prizes, and climb the leaderboard.">
+<meta name="keywords" content="Free Fire tournament, Aura Esports, Free Fire India, esports app, cash tournament, Free Fire scrims">
+<meta name="theme-color" content="#060714">
+<!-- Open Graph -->
+<meta property="og:title" content="Aura Esports — India's Ultimate Free Fire Tournament Platform">
+<meta property="og:description" content="Join daily Free Fire tournaments, win real cash, and compete with the best players in India.">
+<meta property="og:type" content="website">
+
+<!-- Fonts: Orbitron (display / gaming HUD), Rajdhani (technical numerals & subheads), Inter (body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   AURA ESPORTS — LANDING PAGE STYLES
+   Structure: Tokens -> Reset -> Layout Utilities -> Components
+   ============================================================ */
+
+:root{
+  /* ---- Color tokens ---- */
+  --bg-0:#050611;             /* deepest background */
+  --bg-1:#0a0c1c;             /* primary background */
+  --bg-2:#0d0f24;             /* secondary panels */
+  --bg-3:#12142c;             /* elevated panels */
+  --glass-fill: rgba(255,255,255,0.035);
+  --glass-fill-hover: rgba(255,255,255,0.065);
+  --glass-border: rgba(255,255,255,0.09);
+  --neon-blue:#00d9ff;
+  --neon-blue-2:#4d7fff;
+  --neon-purple:#a855f7;
+  --neon-purple-2:#7c3aed;
+  --gold:#ffbf4d;
+  --text-0:#f6f7fd;
+  --text-1:#c3c7de;
+  --text-2:#7f84a3;
+  --grad-aura: linear-gradient(135deg,var(--neon-blue) 0%,var(--neon-purple) 100%);
+  --grad-aura-soft: linear-gradient(135deg, rgba(0,217,255,.18), rgba(168,85,247,.18));
+  --grad-gold: linear-gradient(135deg,#ffd98a,#ffbf4d);
+  --shadow-glow-blue: 0 0 40px rgba(0,217,255,.25);
+  --shadow-glow-purple: 0 0 40px rgba(168,85,247,.25);
+  --radius-sm:10px;
+  --radius-md:16px;
+  --radius-lg:24px;
+  --ease: cubic-bezier(.16,.84,.44,1);
+}
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+}
+
+body{
+  background:var(--bg-1);
+  color:var(--text-1);
+  font-family:'Inter',sans-serif;
+  line-height:1.6;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+ul{ list-style:none; }
+button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+input,textarea{ font-family:inherit; }
+
+h1,h2,h3,h4{ font-family:'Orbitron',sans-serif; color:var(--text-0); letter-spacing:.02em; line-height:1.2; }
+.eyebrow{ font-family:'Rajdhani',sans-serif; font-weight:700; letter-spacing:.28em; text-transform:uppercase; font-size:.78rem; color:var(--neon-blue); }
+.gradient-text{
+  background:var(--grad-aura);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+
+.container{ width:100%; max-width:1240px; margin-inline:auto; padding-inline:24px; }
+section{ position:relative; padding:110px 0; }
+.section-head{ text-align:center; max-width:640px; margin:0 auto 60px; }
+.section-head h2{ font-size:clamp(1.8rem,4vw,2.6rem); margin-top:14px; }
+.section-head p{ margin-top:14px; color:var(--text-2); font-size:1.02rem; }
+
+/* ---- Custom scrollbar ---- */
+::-webkit-scrollbar{ width:10px; }
+::-webkit-scrollbar-track{ background:var(--bg-0); }
+::-webkit-scrollbar-thumb{ background:linear-gradient(var(--neon-blue),var(--neon-purple)); border-radius:10px; border:2px solid var(--bg-0); }
+*{ scrollbar-width:thin; scrollbar-color:var(--neon-purple) var(--bg-0); }
+
+/* ---- Focus visibility (accessibility) ---- */
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
+  outline:2px solid var(--neon-blue); outline-offset:3px; border-radius:6px;
+}
+
+/* ============ Loader ============ */
+#loader{
+  position:fixed; inset:0; z-index:9999; background:var(--bg-0);
+  display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px;
+  transition:opacity .6s var(--ease), visibility .6s var(--ease);
+}
+#loader.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
+.loader-ring{
+  width:64px; height:64px; border-radius:50%;
+  border:3px solid rgba(255,255,255,.08);
+  border-top-color:var(--neon-blue); border-right-color:var(--neon-purple);
+  animation:spin .9s linear infinite;
+}
+.loader-text{ font-family:'Orbitron',sans-serif; font-weight:800; letter-spacing:.3em; font-size:.85rem; color:var(--text-2); }
+.loader-text span{ color:var(--neon-blue); }
+@keyframes spin{ to{ transform:rotate(360deg); } }
+
+/* ============ Ambient background: hex grid + particle canvas ============ */
+.bg-canvas{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+#particles{ position:fixed; inset:0; z-index:0; opacity:.55; }
+.hex-grid{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(0,217,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,217,255,.05) 1px, transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 0%, black 20%, transparent 75%);
+}
+.glow-orb{ position:fixed; border-radius:50%; filter:blur(110px); z-index:0; pointer-events:none; }
+.glow-orb.orb-a{ width:520px; height:520px; top:-160px; left:-120px; background:rgba(0,217,255,.16); }
+.glow-orb.orb-b{ width:480px; height:480px; top:30%; right:-160px; background:rgba(168,85,247,.16); }
+.glow-orb.orb-c{ width:420px; height:420px; bottom:-140px; left:30%; background:rgba(77,127,255,.13); }
+
+main, header, footer{ position:relative; z-index:1; }
+
+/* ============ Glass primitives ============ */
+.glass{
+  background:var(--glass-fill);
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-radius:var(--radius-lg);
+}
+
+/* ============ Buttons ============ */
+.btn{
+  position:relative; display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  padding:15px 30px; border-radius:100px; font-family:'Rajdhani',sans-serif; font-weight:700;
+  font-size:1rem; letter-spacing:.04em; white-space:nowrap;
+  transition:transform .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+  isolation:isolate;
+}
+.btn-primary{ background:var(--grad-aura); color:#04040c; box-shadow:0 10px 30px -8px rgba(0,217,255,.45); }
+.btn-primary:hover{ transform:translateY(-3px); box-shadow:0 16px 40px -8px rgba(168,85,247,.55); }
+.btn-primary:active{ transform:translateY(-1px) scale(.98); }
+.btn-ghost{ background:rgba(255,255,255,.03); color:var(--text-0); border:1px solid var(--glass-border); }
+.btn-ghost:hover{ border-color:rgba(0,217,255,.5); background:rgba(0,217,255,.06); transform:translateY(-3px); }
+.btn-gold{ background:var(--grad-gold); color:#241300; box-shadow:0 10px 30px -8px rgba(255,191,77,.45); }
+.btn-gold:hover{ transform:translateY(-3px); box-shadow:0 16px 40px -8px rgba(255,191,77,.6); }
+.btn-sm{ padding:10px 20px; font-size:.88rem; }
+
+/* ============ Announcement Bar (Section 10) ============ */
+.announcement-bar{
+  background: linear-gradient(90deg, rgba(0,217,255,0.1), rgba(168,85,247,0.15), rgba(0,217,255,0.1));
+  border-bottom: 1px solid var(--glass-border);
+  padding: 10px 0;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  color: var(--text-0);
+  overflow: hidden;
+  white-space: nowrap;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 201;
+}
+.announcement-track{
+  display: inline-block;
+  animation: marquee 25s linear infinite;
+}
+.announcement-track span{
+  margin-right: 50px;
+}
+.announcement-track span strong{
+  color: var(--neon-blue);
+  margin-right: 6px;
+}
+@keyframes marquee{
+  0%{ transform: translateX(0); }
+  100%{ transform: translateX(-50%); }
+}
+
+/* Navbar offset due to announcement bar */
+.navbar{
+  position:fixed; top:41px; left:0; right:0; z-index:200;
+  padding:18px 0; transition:padding .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+  border-bottom:1px solid transparent;
+}
+.navbar.scrolled{
+  padding:12px 0; background:rgba(6,7,17,.72); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border-bottom-color:var(--glass-border);
+}
+.nav-inner{ display:flex; align-items:center; justify-content:space-between; gap:20px; }
+.brand{ display:flex; align-items:center; gap:10px; font-family:'Orbitron',sans-serif; font-weight:800; font-size:1.15rem; color:var(--text-0); }
+.brand-mark{
+  width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center;
+  background:var(--grad-aura); position:relative; box-shadow:0 0 22px rgba(0,217,255,.5);
+}
+.brand-mark svg{ width:22px; height:22px; }
+.nav-links{ display:flex; align-items:center; gap:34px; }
+.nav-links a{
+  font-family:'Rajdhani',sans-serif; font-weight:600; font-size:.96rem; letter-spacing:.03em; color:var(--text-1);
+  position:relative; padding:6px 2px; transition:color .25s;
+}
+.nav-links a::after{
+  content:''; position:absolute; left:0; bottom:-2px; width:0; height:2px; background:var(--grad-aura);
+  transition:width .3s var(--ease); border-radius:2px;
+}
+.nav-links a:hover{ color:var(--text-0); }
+.nav-links a.active{ color:var(--neon-blue); }
+.nav-links a.active::after{ width:100%; }
+.nav-cta{ display:flex; align-items:center; gap:12px; }
+.nav-toggle{ display:none; flex-direction:column; gap:5px; width:34px; height:34px; align-items:center; justify-content:center; }
+.nav-toggle span{ width:22px; height:2px; background:var(--text-0); border-radius:2px; transition:transform .3s var(--ease), opacity .3s; }
+.nav-toggle.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2){ opacity:0; }
+.nav-toggle.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+/* ============ Hero ============ */
+.hero{
+  min-height:100vh; display:flex; align-items:center; padding-top:160px; padding-bottom:80px;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(0,217,255,.14), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 100% 20%, rgba(168,85,247,.14), transparent 60%),
+    var(--bg-1);
+  overflow:hidden;
+}
+.hero-inner{ display:grid; grid-template-columns:1.1fr .9fr; gap:60px; align-items:center; }
+.hero-badge{
+  display:inline-flex; align-items:center; gap:8px; padding:8px 16px; border-radius:100px;
+  background:var(--glass-fill); border:1px solid var(--glass-border); margin-bottom:22px;
+}
+.hero-badge .dot{ width:7px; height:7px; border-radius:50%; background:var(--neon-blue); box-shadow:0 0 10px var(--neon-blue); animation:pulse-dot 1.6s ease-in-out infinite; }
+@keyframes pulse-dot{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
+.hero-badge span{ font-family:'Rajdhani',sans-serif; font-weight:600; font-size:.85rem; letter-spacing:.05em; color:var(--text-1); }
+.hero h1{ font-size:clamp(2.3rem,5.4vw,3.9rem); font-weight:800; }
+.hero h1 .line{ display:block; }
+.hero-sub{ margin-top:22px; font-size:1.08rem; color:var(--text-2); max-width:540px; }
+.hero-actions{ display:flex; flex-wrap:wrap; gap:16px; margin-top:36px; }
+.hero-meta{ display:flex; gap:28px; margin-top:44px; flex-wrap:wrap; }
+.hero-meta div{ display:flex; flex-direction:column; }
+.hero-meta strong{ font-family:'Orbitron',sans-serif; font-size:1.35rem; color:var(--text-0); }
+.hero-meta small{ color:var(--text-2); font-size:.78rem; letter-spacing:.04em; text-transform:uppercase; margin-top:2px; }
+
+/* Hero visual: phone mock with aura ring signature */
+.hero-visual{ position:relative; display:flex; align-items:center; justify-content:center; }
+.aura-ring{
+  position:absolute; width:420px; height:420px; border-radius:50%;
+  background:conic-gradient(from 0deg, var(--neon-blue), var(--neon-purple), var(--gold), var(--neon-blue));
+  filter:blur(2px); opacity:.55; animation:rotate-ring 12s linear infinite;
+  mask:radial-gradient(circle, transparent 62%, black 63%, black 66%, transparent 67%);
+  -webkit-mask:radial-gradient(circle, transparent 62%, black 63%, black 66%, transparent 67%);
+}
+.aura-ring.ring-2{ width:340px; height:340px; opacity:.35; animation-duration:18s; animation-direction:reverse; }
+@keyframes rotate-ring{ to{ transform:rotate(360deg); } }
+.hero-phone{
+  position:relative; width:270px; border-radius:34px; padding:12px; z-index:2;
+  background:linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  border:1px solid var(--glass-border); box-shadow:0 30px 80px -20px rgba(0,0,0,.7), var(--shadow-glow-blue);
+  animation:float-y 5s ease-in-out infinite;
+}
+@keyframes float-y{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-16px);} }
+.hero-phone img{ border-radius:24px; width:100%; }
+
+/* ---- Hero phone screenshot slider ---- */
+.phone-slider{
+  position:relative; width:100%; aspect-ratio:300/640; border-radius:24px;
+  overflow:hidden; background:var(--bg-2); touch-action:pan-y; cursor:grab;
+}
+.phone-slider:active{ cursor:grabbing; }
+.phone-slide{
+  position:absolute; inset:0; width:100%; height:100%;
+  opacity:0; transform:translateX(14px) scale(1.015);
+  transition:opacity .7s var(--ease), transform .7s var(--ease);
+  pointer-events:none;
+}
+.phone-slide.is-active{
+  opacity:1; transform:translateX(0) scale(1); pointer-events:auto; z-index:1;
+}
+.phone-slide.is-prev{ transform:translateX(-14px) scale(1.015); }
+.phone-slide img{
+  width:100%; height:100%; object-fit:cover; object-position:center top;
+  border-radius:24px; display:block; user-select:none; -webkit-user-drag:none;
+}
+.phone-slider-fade{
+  position:absolute; inset:0; z-index:2; pointer-events:none; border-radius:24px;
+  background:linear-gradient(180deg, rgba(0,0,0,0) 72%, rgba(0,0,0,.4) 100%);
+}
+.phone-slider-dots{
+  position:absolute; left:0; right:0; bottom:10px; z-index:3;
+  display:flex; align-items:center; justify-content:center; gap:6px;
+}
+.phone-dot{
+  width:6px; height:6px; border-radius:50%; padding:0;
+  background:rgba(255,255,255,.4); border:none; cursor:pointer;
+  transition:width .35s var(--ease), background .35s var(--ease), box-shadow .35s var(--ease);
+}
+.phone-dot:hover{ background:rgba(255,255,255,.7); }
+.phone-dot.active{
+  width:16px; border-radius:3px; background:var(--grad-aura);
+  box-shadow:0 0 8px rgba(0,217,255,.6);
+}
+.floating-chip{
+  position:absolute; padding:10px 16px; border-radius:14px; z-index:3;
+  display:flex; align-items:center; gap:8px; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:.88rem;
+  animation:float-y 4s ease-in-out infinite;
+}
+.chip-prize{ top:8%; left:-8%; color:var(--gold); animation-delay:.3s; }
+.chip-live{ bottom:14%; right:-10%; color:var(--neon-blue); animation-delay:.9s; }
+.chip-dot{ width:8px; height:8px; border-radius:50%; background:currentColor; box-shadow:0 0 8px currentColor; }
+
+.scroll-indicator{
+  position:absolute; left:50%; bottom:26px; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:8px; z-index:2;
+}
+.scroll-indicator span{ font-family:'Rajdhani',sans-serif; font-size:.72rem; letter-spacing:.25em; text-transform:uppercase; color:var(--text-2); }
+.scroll-mouse{ width:24px; height:38px; border:2px solid var(--glass-border); border-radius:14px; display:flex; justify-content:center; padding-top:6px; }
+.scroll-mouse::before{ content:''; width:4px; height:8px; border-radius:3px; background:var(--grad-aura); animation:scroll-dot 1.6s ease-in-out infinite; }
+@keyframes scroll-dot{ 0%{ opacity:1; transform:translateY(0);} 70%{ opacity:0; transform:translateY(10px);} 100%{opacity:0;} }
+
+/* ============ Reveal-on-scroll ============ */
+.reveal{ opacity:0; transform:translateY(34px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
+.reveal.in{ opacity:1; transform:translateY(0); }
+.reveal-delay-1{ transition-delay:.08s; } .reveal-delay-2{ transition-delay:.16s; }
+.reveal-delay-3{ transition-delay:.24s; } .reveal-delay-4{ transition-delay:.32s; }
+
+/* ============================================================
+   NEW PREMIUM SECTIONS (1. TOURNAMENT SHOWCASE)
+   ============================================================ */
+.tournament-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; }
+.tournament-card{
+  background:var(--bg-2);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  transition:transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
+}
+.tournament-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 22px 50px -18px rgba(0,217,255,.35), var(--shadow-glow-blue);
+  border-color:rgba(0,217,255,.4);
+}
+.tournament-banner-wrap{ position:relative; width:100%; height:150px; overflow:hidden; }
+.tournament-banner-wrap img{ width:100%; height:100%; object-fit:cover; transition:transform .5s var(--ease); }
+.tournament-card:hover .tournament-banner-wrap img{ transform:scale(1.05); }
+.tournament-badges{
+  position:absolute; top:12px; left:12px; right:12px;
+  display:flex; justify-content:space-between; align-items:center; z-index:2;
+}
+.badge-live{
+  background:rgba(255,0,0,0.85); color:#fff; font-family:'Orbitron',sans-serif; font-weight:700; font-size:.7rem;
+  padding:4px 10px; border-radius:100px; display:flex; align-items:center; gap:5px;
+  box-shadow:0 0 12px rgba(255,0,0,0.5); animation:pulse-dot 1.5s infinite;
+}
+.badge-mode{
+  background:rgba(5,6,17,0.75); backdrop-filter:blur(8px); color:var(--neon-blue); border:1px solid var(--glass-border);
+  font-family:'Rajdhani',sans-serif; font-weight:700; font-size:.78rem; padding:4px 12px; border-radius:100px;
+}
+.tournament-body{ padding:20px; display:flex; flex-direction:column; gap:14px; flex-grow:1; }
+.tournament-title{ font-family:'Orbitron',sans-serif; font-size:1.1rem; color:var(--text-0); font-weight:700; }
+.tournament-stats{
+  display:grid; grid-template-columns:repeat(2,1fr); gap:10px; padding:12px;
+  background:rgba(255,255,255,0.02); border-radius:var(--radius-sm); border:1px solid var(--glass-border);
+}
+.stat-box span{ display:block; font-size:.72rem; color:var(--text-2); text-transform:uppercase; font-family:'Rajdhani',sans-serif; }
+.stat-box strong{ display:block; font-size:.95rem; color:var(--text-0); font-family:'Orbitron',sans-serif; margin-top:2px; }
+.stat-box.prize strong{ color:var(--gold); }
+.tournament-meta-row{ display:flex; justify-content:space-between; align-items:center; font-size:.85rem; color:var(--text-2); font-family:'Rajdhani',sans-serif; font-weight:600; }
+.tournament-meta-row span{ display:flex; align-items:center; gap:5px; }
+.slots-progress{ width:100%; background:rgba(255,255,255,0.08); height:6px; border-radius:3px; overflow:hidden; position:relative; }
+.slots-bar{ height:100%; background:var(--grad-aura); border-radius:3px; }
+.slots-text{ display:flex; justify-content:space-between; font-size:.75rem; color:var(--text-2); font-family:'Rajdhani',sans-serif; }
+
+/* ============================================================
+   NEW PREMIUM SECTIONS (2. WINNERS SECTION)
+   ============================================================ */
+.winners-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
+.winner-card{
+  background:var(--bg-2);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-md);
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  gap:12px;
+  position:relative;
+  overflow:hidden;
+  transition:transform .3s var(--ease), border-color .3s;
+}
+.winner-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(255,191,77,0.4);
+  box-shadow:0 15px 35px -10px rgba(255,191,77,0.2);
+}
+.winner-avatar-wrap{ position:relative; width:64px; height:64px; margin-bottom:4px; }
+.winner-avatar-wrap img{ width:100%; height:100%; border-radius:50%; border:2px solid var(--gold); object-fit:cover; }
+.winner-trophy{
+  position:absolute; bottom:-4px; right:-4px; width:26px; height:26px; background:var(--grad-gold);
+  border-radius:50%; display:flex; align-items:center; justify-content:center; color:#241300;
+  box-shadow:0 0 10px rgba(255,191,77,0.6);
+}
+.winner-trophy svg{ width:14px; height:14px; }
+.winner-name{ font-family:'Orbitron',sans-serif; font-size:0.95rem; font-weight:700; color:var(--text-0); }
+.winner-tourney{ font-size:0.8rem; color:var(--text-2); font-family:'Rajdhani',sans-serif; }
+.winner-prize{ font-family:'Orbitron',sans-serif; font-size:1.1rem; color:var(--gold); font-weight:800; margin-top:4px; }
+.winner-badge-pos{
+  position:absolute; top:10px; right:10px; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:.7rem;
+  padding:2px 8px; border-radius:6px; background:rgba(255,191,77,0.15); color:var(--gold); border:1px solid rgba(255,191,77,0.3);
+}
+
+/* ============================================================
+   NEW PREMIUM SECTIONS (3. LEADERBOARD)
+   ============================================================ */
+.leaderboard-wrapper{
+  background:var(--bg-2); border:1px solid var(--glass-border); border-radius:var(--radius-lg);
+  overflow-x:auto; width:100%; box-shadow:0 20px 50px rgba(0,0,0,0.5);
+}
+.leaderboard-table{ width:100%; border-collapse:collapse; text-align:left; min-width:800px; }
+.leaderboard-table th{
+  background:rgba(255,255,255,0.02); padding:18px 20px; font-family:'Rajdhani',sans-serif; font-weight:700;
+  font-size:.85rem; letter-spacing:.1em; text-transform:uppercase; color:var(--text-2); border-bottom:1px solid var(--glass-border);
+}
+.leaderboard-table td{
+  padding:16px 20px; font-size:.92rem; border-bottom:1px solid rgba(255,255,255,0.03); color:var(--text-1);
+  font-family:'Rajdhani',sans-serif; font-weight:600;
+}
+.leaderboard-table tr:hover td{ background:rgba(255,255,255,0.02); }
+.rank-badge{
+  width:32px; height:32px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
+  font-family:'Orbitron',sans-serif; font-weight:800; font-size:.85rem; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border);
+}
+tr:nth-child(1) .rank-badge{ background:var(--grad-gold); color:#241300; border:none; box-shadow:0 0 15px rgba(255,191,77,0.5); }
+tr:nth-child(2) .rank-badge{ background:linear-gradient(135deg,#e0e0e0,#9e9e9e); color:#1a1a1a; border:none; }
+tr:nth-child(3) .rank-badge{ background:linear-gradient(135deg,#cd7f32,#8c4a16); color:#fff; border:none; }
+.lb-player{ display:flex; align-items:center; gap:12px; }
+.lb-player img{ width:38px; height:38px; border-radius:50%; border:1px solid var(--glass-border); object-fit:cover; }
+.lb-name{ font-family:'Orbitron',sans-serif; font-size:.9rem; color:var(--text-0); font-weight:700; }
+.lb-earnings{ font-family:'Orbitron',sans-serif; color:var(--gold); font-weight:700; }
+.status-pill{
+  display:inline-block; padding:4px 10px; border-radius:100px; font-size:.72rem; text-transform:uppercase;
+  background:rgba(0,217,255,0.1); color:var(--neon-blue); border:1px solid rgba(0,217,255,0.3);
+}
+
+/* ============================================================
+   NEW PREMIUM SECTIONS (7. PLAYER REVIEWS - 10 Cards Grid)
+   ============================================================ */
+.review-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; }
+.review-card{ padding:26px; display:flex; flex-direction:column; gap:14px; transition:transform .4s var(--ease), border-color .4s; }
+.review-card:hover{ transform:translateY(-6px); border-color:rgba(168,85,247,.4); }
+.review-top{ display:flex; align-items:center; gap:12px; }
+.review-top img{ width:46px; height:46px; border-radius:50%; border:1px solid var(--glass-border); }
+.review-name{ font-family:'Rajdhani',sans-serif; font-weight:700; color:var(--text-0); font-size:.98rem; }
+.review-handle{ font-size:.76rem; color:var(--text-2); }
+.stars{ display:flex; gap:3px; }
+.stars svg{ width:15px; height:15px; fill:var(--gold); }
+.review-text{ font-size:.9rem; color:var(--text-2); flex-grow:1; }
+
+/* ============================================================
+   EXISTING COMPONENTS & SECTIONS
+   ============================================================ */
+.gallery-track{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:22px;
+}
+.shot-card{
+  position:relative; border-radius:var(--radius-md); overflow:hidden; cursor:pointer;
+  border:1px solid var(--glass-border); background:var(--bg-2);
+  transition:transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
+}
+.shot-card:hover{ transform:translateY(-8px); box-shadow:0 22px 50px -18px rgba(0,217,255,.35); border-color:rgba(0,217,255,.4); }
+.shot-card img{ width:100%; aspect-ratio:9/16; object-fit:cover; }
+.shot-label{
+  position:absolute; inset:auto 0 0 0; padding:14px 16px 12px;
+  background:linear-gradient(to top, rgba(5,6,17,.92), transparent);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.shot-label span{ font-family:'Rajdhani',sans-serif; font-weight:700; color:var(--text-0); font-size:.92rem; }
+.shot-zoom{
+  width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,.08); border:1px solid var(--glass-border);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.shot-zoom svg{ width:14px; height:14px; }
+
+/* Lightbox */
+.lightbox{
+  position:fixed; inset:0; z-index:1000; background:rgba(3,4,10,.92); backdrop-filter:blur(6px);
+  display:flex; align-items:center; justify-content:center; padding:30px;
+  opacity:0; visibility:hidden; transition:opacity .35s var(--ease), visibility .35s var(--ease);
+}
+.lightbox.open{ opacity:1; visibility:visible; }
+.lightbox-inner{ position:relative; max-width:380px; width:100%; transform:scale(.92); transition:transform .35s var(--ease); }
+.lightbox.open .lightbox-inner{ transform:scale(1); }
+.lightbox-inner img{ width:100%; border-radius:20px; border:1px solid var(--glass-border); box-shadow:0 0 60px rgba(0,217,255,.25); }
+.lightbox-caption{ text-align:center; margin-top:16px; font-family:'Rajdhani',sans-serif; font-weight:700; color:var(--text-0); letter-spacing:.04em; }
+.lightbox-close, .lightbox-prev, .lightbox-next{
+  position:absolute; width:42px; height:42px; border-radius:50%; background:var(--glass-fill); border:1px solid var(--glass-border);
+  display:flex; align-items:center; justify-content:center; color:var(--text-0); transition:background .25s, transform .25s;
+}
+.lightbox-close{ top:-56px; right:0; }
+.lightbox-prev{ left:-58px; top:45%; }
+.lightbox-next{ right:-58px; top:45%; }
+.lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover{ background:rgba(0,217,255,.15); transform:scale(1.08); }
+@media (max-width:640px){
+  .lightbox-prev{ left:6px; } .lightbox-next{ right:6px; }
+  .lightbox-prev, .lightbox-next{ top:auto; bottom:-58px; }
+  .lightbox-prev{ left:calc(50% - 54px); } .lightbox-next{ right:calc(50% - 54px); }
+}
+
+/* Features */
+.feature-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+.feature-card{
+  padding:30px 26px; position:relative; overflow:hidden;
+  transition:transform .4s var(--ease), border-color .4s var(--ease), background .4s var(--ease);
+}
+.feature-card::before{
+  content:''; position:absolute; inset:0; opacity:0; background:var(--grad-aura-soft); transition:opacity .4s;
+}
+.feature-card:hover{ transform:translateY(-6px); border-color:rgba(0,217,255,.35); }
+.feature-card:hover::before{ opacity:1; }
+.feature-icon{
+  width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center;
+  background:var(--grad-aura-soft); border:1px solid var(--glass-border); margin-bottom:20px; position:relative; z-index:1;
+}
+.feature-icon svg{ width:24px; height:24px; stroke:var(--neon-blue); }
+.feature-card h3{ font-family:'Rajdhani',sans-serif; font-size:1.15rem; font-weight:700; color:var(--text-0); position:relative; z-index:1; }
+.feature-card p{ margin-top:10px; font-size:.92rem; color:var(--text-2); position:relative; z-index:1; }
+
+/* Timeline */
+.timeline{ position:relative; max-width:900px; margin:0 auto; }
+.timeline::before{
+  content:''; position:absolute; left:29px; top:10px; bottom:10px; width:2px;
+  background:linear-gradient(var(--neon-blue), var(--neon-purple));
+  opacity:.4;
+}
+.timeline-item{ position:relative; display:flex; gap:26px; padding-bottom:46px; }
+.timeline-item:last-child{ padding-bottom:0; }
+.step-node{
+  flex-shrink:0; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:var(--bg-2); border:1px solid var(--glass-border); position:relative; z-index:1;
+  font-family:'Orbitron',sans-serif; font-weight:800; color:var(--neon-blue); font-size:1.1rem;
+  box-shadow:0 0 0 6px var(--bg-1);
+}
+.timeline-item.in-view .step-node{ background:var(--grad-aura); color:#04040c; box-shadow:0 0 0 6px var(--bg-1), 0 0 26px rgba(0,217,255,.5); transition:all .5s var(--ease); }
+.step-body h3{ font-family:'Rajdhani',sans-serif; font-size:1.25rem; font-weight:700; color:var(--text-0); margin-top:8px; }
+.step-body p{ margin-top:6px; color:var(--text-2); font-size:.94rem; max-width:520px; }
+.step-tag{ font-family:'Rajdhani',sans-serif; font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--text-2); }
+
+/* Stats */
+.stats-band{
+  background:linear-gradient(135deg, rgba(0,217,255,.08), rgba(168,85,247,.08));
+  border-top:1px solid var(--glass-border); border-bottom:1px solid var(--glass-border);
+  padding:70px 0;
+}
+.stats-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; text-align:center; }
+.stat-item strong{
+  display:block; font-family:'Orbitron',sans-serif; font-weight:800; font-size:clamp(1.8rem,4vw,2.6rem);
+  background:var(--grad-aura); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+.stat-item span{ display:block; margin-top:8px; font-family:'Rajdhani',sans-serif; font-size:.86rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-2); }
+
+/* FAQ */
+.faq-list{ max-width:780px; margin:0 auto; display:flex; flex-direction:column; gap:14px; }
+.faq-item{ overflow:hidden; }
+.faq-q{
+  width:100%; display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:22px 26px; text-align:left; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:1.02rem; color:var(--text-0);
+}
+.faq-icon{ flex-shrink:0; width:30px; height:30px; border-radius:50%; border:1px solid var(--glass-border); display:flex; align-items:center; justify-content:center; position:relative; transition:transform .35s var(--ease), background .35s; }
+.faq-icon::before, .faq-icon::after{ content:''; position:absolute; background:var(--neon-blue); transition:transform .35s var(--ease); }
+.faq-icon::before{ width:12px; height:2px; }
+.faq-icon::after{ width:2px; height:12px; }
+.faq-item.open .faq-icon{ transform:rotate(180deg); background:var(--grad-aura); }
+.faq-item.open .faq-icon::after{ transform:scaleY(0); }
+.faq-item.open .faq-icon::before{ background:#04040c; }
+.faq-a{ max-height:0; overflow:hidden; transition:max-height .45s var(--ease); }
+.faq-a p{ padding:0 26px 22px; color:var(--text-2); font-size:.92rem; max-width:640px; }
+
+/* Download CTA */
+.download-cta{
+  border-radius:32px; padding:70px 40px; text-align:center; position:relative; overflow:hidden;
+  background:
+    radial-gradient(ellipse 80% 100% at 50% 0%, rgba(0,217,255,.18), transparent 60%),
+    radial-gradient(ellipse 80% 100% at 50% 100%, rgba(168,85,247,.18), transparent 60%),
+    var(--bg-2);
+  border:1px solid var(--glass-border);
+}
+.download-cta h2{ font-size:clamp(1.7rem,4vw,2.5rem); }
+.download-cta p{ max-width:520px; margin:16px auto 0; color:var(--text-2); }
+.download-actions{ display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin-top:36px; }
+
+/* Footer */
+footer{ padding:70px 0 30px; border-top:1px solid var(--glass-border); background:var(--bg-0); }
+.footer-grid{ display:grid; grid-template-columns:1.4fr repeat(4,1fr); gap:36px; }
+.footer-brand p{ margin-top:14px; color:var(--text-2); font-size:.9rem; max-width:280px; }
+.footer-col h4{ font-family:'Rajdhani',sans-serif; font-size:.85rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text-0); margin-bottom:16px; }
+.footer-col ul{ display:flex; flex-direction:column; gap:11px; }
+.footer-col a{ font-size:.9rem; color:var(--text-2); transition:color .25s; }
+.footer-col a:hover{ color:var(--neon-blue); }
+.social-row{ display:flex; gap:10px; margin-top:18px; }
+.social-row a{ width:36px; height:36px; border-radius:50%; border:1px solid var(--glass-border); display:flex; align-items:center; justify-content:center; transition:border-color .25s, transform .25s, background .25s; }
+.social-row a:hover{ border-color:var(--neon-blue); background:rgba(0,217,255,.08); transform:translateY(-3px); }
+.social-row svg{ width:16px; height:16px; }
+.footer-bottom{ margin-top:56px; padding-top:24px; border-top:1px solid var(--glass-border); display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:space-between; }
+.footer-bottom p{ font-size:.82rem; color:var(--text-2); }
+.disclaimer{ font-size:.78rem; color:var(--text-2); opacity:.75; margin-top:10px; max-width:760px; }
+
+/* Back to top */
+#back-to-top{
+  position:fixed; right:22px; bottom:22px; z-index:150; width:48px; height:48px; border-radius:50%;
+  background:var(--grad-aura); display:flex; align-items:center; justify-content:center;
+  box-shadow:0 10px 26px -6px rgba(0,217,255,.5);
+  opacity:0; visibility:hidden; transform:translateY(14px);
+  transition:opacity .35s var(--ease), transform .35s var(--ease), visibility .35s var(--ease);
+}
+#back-to-top.show{ opacity:1; visibility:visible; transform:translateY(0); }
+#back-to-top svg{ width:18px; height:18px; stroke:#04040c; }
+
+/* Responsive adjustments */
+@media (max-width:980px){
+  .hero-inner{ grid-template-columns:1fr; }
+  .hero-visual{ order:-1; margin-bottom:20px; transform:scale(.85); }
+  .feature-grid{ grid-template-columns:repeat(2,1fr); }
+  .review-grid{ grid-template-columns:repeat(2,1fr); }
+  .stats-grid{ grid-template-columns:repeat(2,1fr); row-gap:36px; }
+  .footer-grid{ grid-template-columns:repeat(3,1fr); }
+  .footer-brand{ grid-column:1/-1; }
+}
+@media (max-width:760px){
+  .nav-links, .nav-cta{ display:none; }
+  .nav-toggle{ display:flex; }
+  .navbar.mobile-open .nav-links{
+    display:flex; flex-direction:column; position:fixed; top:64px; left:16px; right:16px; z-index:190;
+    background:rgba(9,10,22,.97); border:1px solid var(--glass-border); border-radius:18px; padding:22px; gap:8px;
+    backdrop-filter:blur(20px);
+  }
+  .navbar.mobile-open .nav-cta{
+    display:flex; position:fixed; top:calc(64px + 250px); left:16px; right:16px; z-index:190; flex-direction:column;
+  }
+  section{ padding:74px 0; }
+  .feature-grid{ grid-template-columns:1fr; }
+  .review-grid{ grid-template-columns:1fr; }
+  .footer-grid{ grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:520px){
+  .stats-grid{ grid-template-columns:repeat(2,1fr); }
+  .gallery-track{ grid-template-columns:repeat(2,1fr); }
+  .download-cta{ padding:48px 22px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== Loading Screen ===================== -->
+<div id="loader" aria-hidden="true">
+  <div class="loader-ring"></div>
+  <div class="loader-text">AURA<span>ESPORTS</span></div>
+</div>
+
+<!-- ===================== Ambient background layers ===================== -->
+<canvas id="particles"></canvas>
+<div class="hex-grid"></div>
+<div class="glow-orb orb-a"></div>
+<div class="glow-orb orb-b"></div>
+<div class="glow-orb orb-c"></div>
+
+<!-- ===================== Announcement Bar ===================== -->
+<div class="announcement-bar">
+  <div class="announcement-track">
+    <span><strong>🔥 New Tournament Live:</strong> Free Fire Pro Scrims Squad (₹10,000 Prize Pool)</span>
+    <span><strong>🎁 New Referral Bonus:</strong> Invite your squad and earn ₹50 per friend instantly!</span>
+    <span><strong>💰 Big Prize Pool:</strong> Over ₹1,00,000 up for grabs this weekend!</span>
+    <span><strong>🔥 New Tournament Live:</strong> Free Fire Pro Scrims Squad (₹10,000 Prize Pool)</span>
+    <span><strong>🎁 New Referral Bonus:</strong> Invite your squad and earn ₹50 per friend instantly!</span>
+  </div>
+</div>
+
+<!-- ===================== Navbar ===================== -->
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <!-- Replace with your Aura Esports Logo -->
+    <a href="https://user19666.na.imgto.link/public/20260806/1000159906.avif" class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 7v6c0 5 4 8.5 9 9 5-.5 9-4 9-9V7l-9-5z" stroke="#04040c" stroke-width="1.6"/><path d="M9 12l2 2 4-4" stroke="#04040c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      Aura Esports
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home" class="nav-link active">Home</a>
+      <a href="#tournaments" class="nav-link">Tournaments</a>
+      <a href="#winners" class="nav-link">Winners</a>
+      <a href="#leaderboard" class="nav-link">Leaderboard</a>
+      <a href="#screenshots" class="nav-link">Screenshots</a>
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#reviews" class="nav-link">Reviews</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+    </nav>
+    <div class="nav-cta">
+      <!-- Paste your original APK Download Link here -->
+      <a href="https://github.com/rezenstat-boop/Subh/releases/download/v1.0.1/Aura.eSports.apk" class="btn btn-primary btn-sm">Download App</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================== Hero Section ===================== -->
+<section class="hero" id="home">
+  <div class="container hero-inner">
+    <div class="hero-copy">
+      <div class="hero-badge reveal in"><span class="dot"></span><span>#1 Free Fire Tournament App in India</span></div>
+      <h1 class="reveal in">
+        <span class="line">India's Ultimate</span>
+        <span class="line gradient-text">Free Fire Tournament</span>
+        <span class="line">Platform</span>
+      </h1>
+      <p class="hero-sub reveal in reveal-delay-1">Join Daily Free Fire Tournaments, Win Real Cash, and Compete with the Best Players.</p>
+      <div class="hero-actions reveal in reveal-delay-2">
+        <!-- Paste your original APK Download Link here -->
+        <a href="https://github.com/rezenstat-boop/Subh/releases/download/v1.0.1/Aura.eSports.apk" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="#04040c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download App
+        </a>
+        <a href="#" class="btn btn-ghost">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 12a4 4 0 108 0 4 4 0 00-8 0z" stroke="currentColor" stroke-width="1.6"/><path d="M4 18c1-3 4-4 8-4s7 1 8 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          Join Discord
+        </a>
+      </div>
+      <div class="hero-meta reveal in reveal-delay-3">
+        <div><strong>10,000+</strong><small>Downloads</small></div>
+        <div><strong>1,000+</strong><small>Daily Matches</small></div>
+        <div><strong>₹10L+</strong><small>Prize Distributed</small></div>
+      </div>
+    </div>
+    <div class="hero-visual reveal in reveal-delay-2">
+      <div class="aura-ring"></div>
+      <div class="aura-ring ring-2"></div>
+      <div class="hero-phone">
+        <!-- App screenshot slider: drop your screenshots in an /assets (or similar)
+             folder alongside this HTML file and update the src paths below. -->
+        <div class="phone-slider" id="phoneSlider" role="region" aria-label="App screenshot preview" aria-roledescription="carousel">
+          <div class="phone-slide" data-index="0"><img src="https://user19666.na.imgto.link/public/20260806/1000159992.avif" alt="Aura Esports app — Home screen" loading="lazy"></div>
+          <div class="phone-slide" data-index="1"><img src="https://user19666.na.imgto.link/public/20260806/1000160157.avif" alt="Aura Esports app — Tournament screen" loading="lazy"></div>
+          <div class="phone-slide" data-index="2"><img src="https://user19666.na.imgto.link/public/20260806/1000160160.avif" alt="Aura Esports app — Wallet screen" loading="lazy"></div>
+          <div class="phone-slide" data-index="3"><img src="https://user19666.na.imgto.link/public/20260806/1000160125.avif" alt="Aura Esports app — Leaderboard screen" loading="lazy"></div>
+          <div class="phone-slide" data-index="4"><img src="https://user19666.na.imgto.link/public/20260806/1000160124.avif" alt="Aura Esports app — Profile screen" loading="lazy"></div>
+          <div class="phone-slide" data-index="5"><img src="https://user19666.na.imgto.link/public/20260806/1000160162.avif" alt="Aura Esports app — Support screen" loading="lazy"></div>
+          <div class="phone-slider-fade"></div>
+          <div class="phone-slider-dots" id="phoneSliderDots"></div>
+        </div>
+      </div>
+      <div class="floating-chip glass chip-prize">
+        <span class="chip-dot"></span> ₹5,000 Prize Pool
+      </div>
+      <div class="floating-chip glass chip-live">
+        <span class="chip-dot"></span> Squad Match Live
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-mouse"></div>
+  </div>
+</section>
+
+<!-- ===================== Tournament Showcase (Demo) ===================== -->
+<section id="tournaments">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Active Lobbies</p>
+      <h2>Premium <span class="gradient-text">Tournaments</span></h2>
+      <p>Choose your battle mode, register with your squad, and claim your share of the prize pool.</p>
+    </div>
+    <div class="tournament-grid">
+      
+      <!-- Tournament Card 1 -->
+      <div class="tournament-card reveal">
+        <!-- Replace Tournament Banner -->
+        <div class="tournament-banner-wrap">
+          <div class="tournament-badges">
+            <span class="badge-live"><span class="chip-dot" style="background:#fff"></span> LIVE</span>
+            <span class="badge-mode">Squad</span>
+          </div>
+          <img src="https://user19666.na.imgto.link/public/20260806/1000159995.avif" alt="Tournament Banner" loading="lazy">
+        </div>
+        <div class="tournament-body">
+          <h3 class="tournament-title">Free Fire Pro Scrims #48</h3>
+          <div class="tournament-stats">
+            <div class="stat-box prize">
+              <span>Prize Pool</span>
+              <strong>₹5,000</strong>
+            </div>
+            <div class="stat-box">
+              <span>Entry Fee</span>
+              <strong>₹50</strong>
+            </div>
+          </div>
+          <div class="tournament-meta-row">
+            <span>📅 07 Aug, 2026</span>
+            <span>⏰ 06:00 PM</span>
+          </div>
+          <div class="tournament-meta-row">
+            <span>🗺️ Bermuda</span>
+            <span style="color:var(--neon-blue);">🟢 Open</span>
+          </div>
+          <div>
+            <div class="slots-text">
+              <span>Slots Filled</span>
+              <span>44 / 48</span>
+            </div>
+            <div class="slots-progress"><div class="slots-bar" style="width: 91%;"></div></div>
+          </div>
+          <a href="#" class="btn btn-primary btn-sm" style="width:100%; margin-top:4px;">Join Now</a>
+        </div>
+      </div>
+
+      <!-- Tournament Card 2 -->
+      <div class="tournament-card reveal reveal-delay-1">
+        <!-- Replace Tournament Banner -->
+        <div class="tournament-banner-wrap">
+          <div class="tournament-badges">
+            <span class="badge-live" style="background:rgba(0,217,255,0.85); box-shadow:0 0 12px rgba(0,217,255,0.5);">UPCOMING</span>
+            <span class="badge-mode">Solo</span>
+          </div>
+          <img src="https://user19666.na.imgto.link/public/20260806/1000160111.avif" alt="Tournament Banner" loading="lazy">
+        </div>
+        <div class="tournament-body">
+          <h3 class="tournament-title">Solo Clash Championship</h3>
+          <div class="tournament-stats">
+            <div class="stat-box prize">
+              <span>Prize Pool</span>
+              <strong>₹10,000</strong>
+            </div>
+            <div class="stat-box">
+              <span>Entry Fee</span>
+              <strong>₹250</strong>
+            </div>
+          </div>
+          <div class="tournament-meta-row">
+            <span>📅 07 Aug, 2026</span>
+            <span>⏰ 08:00 PM</span>
+          </div>
+          <div class="tournament-meta-row">
+            <span>🗺️ Kalahari</span>
+            <span style="color:var(--gold);">🟡 Filling Fast</span>
+          </div>
+          <div>
+            <div class="slots-text">
+              <span>Slots Filled</span>
+              <span>38 / 50</span>
+            </div>
+            <div class="slots-progress"><div class="slots-bar" style="width: 76%;"></div></div>
+          </div>
+          <a href="#" class="btn btn-primary btn-sm" style="width:100%; margin-top:4px;">Join Now</a>
+        </div>
+      </div>
+
+      <!-- Tournament Card 3 -->
+      <div class="tournament-card reveal reveal-delay-2">
+        <!-- Replace Tournament Banner -->
+        <div class="tournament-banner-wrap">
+          <div class="tournament-badges">
+            <span class="badge-live" style="background:rgba(0,217,255,0.85); box-shadow:0 0 12px rgba(0,217,255,0.5);">UPCOMING</span>
+            <span class="badge-mode">Duo</span>
+          </div>
+          <img src="https://user19666.na.imgto.link/public/20260806/1000160112.avif" alt="Tournament Banner" loading="lazy">
+        </div>
+        <div class="tournament-body">
+          <h3 class="tournament-title">Duo Nightly Showdown</h3>
+          <div class="tournament-stats">
+            <div class="stat-box prize">
+              <span>Prize Pool</span>
+              <strong>₹3,000</strong>
+            </div>
+            <div class="stat-box">
+              <span>Entry Fee</span>
+              <strong>₹40</strong>
+            </div>
+          </div>
+          <div class="tournament-meta-row">
+            <span>📅 08 Aug, 2026</span>
+            <span>⏰ 05:30 PM</span>
+          </div>
+          <div class="tournament-meta-row">
+            <span>🗺️ Purgatory</span>
+            <span style="color:var(--neon-blue);">🟢 Open</span>
+          </div>
+          <div>
+            <div class="slots-text">
+              <span>Slots Filled</span>
+              <span>12 / 50</span>
+            </div>
+            <div class="slots-progress"><div class="slots-bar" style="width: 24%;"></div></div>
+          </div>
+          <a href="#" class="btn btn-primary btn-sm" style="width:100%; margin-top:4px;">Join Now</a>
+        </div>
+      </div>
+
+      <!-- Tournament Card 4 -->
+      <div class="tournament-card reveal reveal-delay-3">
+        <!-- Replace Tournament Banner -->
+        <div class="tournament-banner-wrap">
+          <div class="tournament-badges">
+            <span class="badge-live"><span class="chip-dot" style="background:#fff"></span> LIVE</span>
+            <span class="badge-mode">Squad</span>
+          </div>
+          <img src="https://user19666.na.imgto.link/public/20260806/1000160113.avif" alt="Tournament Banner" loading="lazy">
+        </div>
+        <div class="tournament-body">
+          <h3 class="tournament-title">High Roller Squad War</h3>
+          <div class="tournament-stats">
+            <div class="stat-box prize">
+              <span>Prize Pool</span>
+              <strong>₹10,000</strong>
+            </div>
+            <div class="stat-box">
+              <span>Entry Fee</span>
+              <strong>₹150</strong>
+            </div>
+          </div>
+          <div class="tournament-meta-row">
+            <span>📅 08 Aug, 2026</span>
+            <span>⏰ 09:00 PM</span>
+          </div>
+          <div class="tournament-meta-row">
+            <span>🗺️ Bermuda</span>
+            <span style="color:var(--gold);">🔴 Almost Full</span>
+          </div>
+          <div>
+            <div class="slots-text">
+              <span>Slots Filled</span>
+              <span>46 / 48</span>
+            </div>
+            <div class="slots-progress"><div class="slots-bar" style="width: 95%;"></div></div>
+          </div>
+          <a href="#" class="btn btn-primary btn-sm" style="width:100%; margin-top:4px;">Join Now</a>
+        </div>
+      </div>
+
+     
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Winner Cards (Demo) ===================== -->
+<section id="winners" style="background: rgba(0,0,0,0.2);">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Hall Of Fame</p>
+      <h2>Recent <span class="gradient-text">Winners</span></h2>
+      <p>Celebrating the champions who turned their Booyah into real cash prizes.</p>
+    </div>
+    <div class="winners-grid">
+      
+      <!-- Winner 1 -->
+      <div class="winner-card reveal">
+        <!-- Replace Winner -->
+        <span class="winner-badge-pos">#1 Place</span>
+        <div class="winner-avatar-wrap">
+          <img src="https://placehold.co/100x100/12142c/ffbf4d?text=RK" alt="Player Avatar" loading="lazy">
+          <div class="winner-trophy"><svg viewBox="0 0 24 24" fill="none"><path d="M8 21h8m-4-9v9m-5-13h10l-1 7H9l-1-7zM5 6h2a3 3 0 003-3H9a3 3 0 00-3 3zm14 0h-2a3 3 0 01-3-3h2a3 3 0 013 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="winner-name">Rohit_FF</div>
+        <div class="winner-tourney">Pro Scrims Squad</div>
+        <div class="winner-prize">₹2,500</div>
+        <div style="font-size: 0.75rem; color: var(--text-2); margin-top: 2px;">05 Aug, 2026</div>
+      </div>
+
+      <!-- Winner 2 -->
+      <div class="winner-card reveal reveal-delay-1">
+        <!-- Replace Winner -->
+        <span class="winner-badge-pos">#1 Place</span>
+        <div class="winner-avatar-wrap">
+          <img src="https://placehold.co/100x100/12142c/00d9ff?text=AS" alt="Player Avatar" loading="lazy">
+          <div class="winner-trophy"><svg viewBox="0 0 24 24" fill="none"><path d="M8 21h8m-4-9v9m-5-13h10l-1 7H9l-1-7zM5 6h2a3 3 0 003-3H9a3 3 0 00-3 3zm14 0h-2a3 3 0 01-3-3h2a3 3 0 013 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="winner-name">Ankit_GG</div>
+        <div class="winner-tourney">Solo Clash Champ</div>
+        <div class="winner-prize">₹1,200</div>
+        <div style="font-size: 0.75rem; color: var(--text-2); margin-top: 2px;">05 Aug, 2026</div>
+      </div>
+
+      <!-- Winner 3 -->
+      <div class="winner-card reveal reveal-delay-2">
+        <!-- Replace Winner -->
+        <span class="winner-badge-pos">#1 Place</span>
+        <div class="winner-avatar-wrap">
+          <img src="https://placehold.co/100x100/12142c/a855f7?text=PV" alt="Player Avatar" loading="lazy">
+          <div class="winner-trophy"><svg viewBox="0 0 24 24" fill="none"><path d="M8 21h8m-4-9v9m-5-13h10l-1 7H9l-1-7zM5 6h2a3 3 0 003-3H9a3 3 0 00-3 3zm14 0h-2a3 3 0 01-3-3h2a3 3 0 013 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="winner-name">Priya_FF</div>
+        <div class="winner-tourney">Duo Showdown</div>
+        <div class="winner-prize">₹1,500</div>
+        <div style="font-size: 0.75rem; color: var(--text-2); margin-top: 2px;">04 Aug, 2026</div>
+      </div>
+
+      <!-- Winner 4 -->
+      <div class="winner-card reveal reveal-delay-3">
+        <!-- Replace Winner -->
+        <span class="winner-badge-pos">#2 Place</span>
+        <div class="winner-avatar-wrap">
+          <img src="https://placehold.co/100x100/12142c/00d9ff?text=VY" alt="Player Avatar" loading="lazy">
+          <div class="winner-trophy"><svg viewBox="0 0 24 24" fill="none"><path d="M8 21h8m-4-9v9m-5-13h10l-1 7H9l-1-7zM5 6h2a3 3 0 003-3H9a3 3 0 00-3 3zm14 0h-2a3 3 0 01-3-3h2a3 3 0 013 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="winner-name">Vikas_Yadav</div>
+        <div class="winner-tourney">High Roller Squad</div>
+        <div class="winner-prize">₹3,000</div>
+        <div style="font-size: 0.75rem; color: var(--text-2); margin-top: 2px;">04 Aug, 2026</div>
+      </div>
+
+      <!-- Winner 5 -->
+      <div class="winner-card reveal">
+        <!-- Replace Winner -->
+        <span class="winner-badge-pos">#1 Place</span>
+        <div class="winner-avatar-wrap">
+          <img src="https://placehold.co/100x100/12142c/ffbf4d?text=SK" alt="Player Avatar" loading="lazy">
+          <div class="winner-trophy"><svg viewBox="0 0 24 24" fill="none"><path d="M8 21h8m-4-9v9m-5-13h10l-1 7H9l-1-7zM5 6h2a3 3 0 003-3H9a3 3 0 00-3 3zm14 0h-2a3 3 0 01-3-3h2a3 3 0 013 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="winner-name">Simran_K</div>
+        <div class="winner-tourney">Sniper Masterclass</div>
+        <div class="winner-prize">₹800</div>
+        <div style="font-size: 0.75rem; color: var(--text-2); margin-top: 2px;">03 Aug, 2026</div>
+      </div>
+
+      <!-- Winner 6 -->
+      <div class="winner-card reveal reveal-delay-1">
+        <!-- Replace Winner -->
+        <span class="winner-badge-pos">#1 Place</span>
+        <div class="winner-avatar-wrap">
+          <img src="https://placehold.co/100x100/12142c/a855f7?text=AR" alt="Player Avatar" loading="lazy">
+          <div class="winner-trophy"><svg viewBox="0 0 24 24" fill="none"><path d="M8 21h8m-4-9v9m-5-13h10l-1 7H9l-1-7zM5 6h2a3 3 0 003-3H9a3 3 0 00-3 3zm14 0h-2a3 3 0 01-3-3h2a3 3 0 013 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="winner-name">Aditya_R</div>
+        <div class="winner-tourney">Weekend Warriors</div>
+        <div class="winner-prize">₹2,000</div>
+        <div style="font-size: 0.75rem; color: var(--text-2); margin-top: 2px;">03 Aug, 2026</div>
+      </div>
+
+      <!-- Winner 7 -->
+      <div class="winner-card reveal reveal-delay-2">
+        <!-- Replace Winner -->
+        <span class="winner-badge-pos">#2 Place</span>
+        <div class="winner-avatar-wrap">
+          <img src="https://placehold.co/100x100/12142c/00d9ff?text=NS" alt="Player Avatar" loading="lazy">
+          <div class="winner-trophy"><svg viewBox="0 0 24 24" fill="none"><path d="M8 21h8m-4-9v9m-5-13h10l-1 7H9l-1-7zM5 6h2a3 3 0 003-3H9a3 3 0 00-3 3zm14 0h-2a3 3 0 01-3-3h2a3 3 0 013 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="winner-name">Neha_Singh</div>
+        <div class="winner-tourney">Blitz Squad Cup</div>
+        <div class="winner-prize">₹1,800</div>
+        <div style="font-size: 0.75rem; color: var(--text-2); margin-top: 2px;">02 Aug, 2026</div>
+      </div>
+
+      <!-- Winner 8 -->
+      <div class="winner-card reveal reveal-delay-3">
+        <!-- Replace Winner -->
+        <span class="winner-badge-pos">#1 Place</span>
+        <div class="winner-avatar-wrap">
+          <img src="https://placehold.co/100x100/12142c/ffbf4d?text=KM" alt="Player Avatar" loading="lazy">
+          <div class="winner-trophy"><svg viewBox="0 0 24 24" fill="none"><path d="M8 21h8m-4-9v9m-5-13h10l-1 7H9l-1-7zM5 6h2a3 3 0 003-3H9a3 3 0 00-3 3zm14 0h-2a3 3 0 01-3-3h2a3 3 0 013 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="winner-name">Karan_Mehta</div>
+        <div class="winner-tourney">Midnight Madness</div>
+        <div class="winner-prize">₹1,000</div>
+        <div style="font-size: 0.75rem; color: var(--text-2); margin-top: 2px;">02 Aug, 2026</div>
+      </div>
+
+      <!-- Winner 9 -->
+      <div class="winner-card reveal">
+        <!-- Replace Winner -->
+        <span class="winner-badge-pos">#1 Place</span>
+        <div class="winner-avatar-wrap">
+          <img src="https://placehold.co/100x100/12142c/00d9ff?text=DJ" alt="Player Avatar" loading="lazy">
+          <div class="winner-trophy"><svg viewBox="0 0 24 24" fill="none"><path d="M8 21h8m-4-9v9m-5-13h10l-1 7H9l-1-7zM5 6h2a3 3 0 003-3H9a3 3 0 00-3 3zm14 0h-2a3 3 0 01-3-3h2a3 3 0 013 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="winner-name">Deepak_J</div>
+        <div class="winner-tourney">Pro Scrims Squad</div>
+        <div class="winner-prize">₹2,500</div>
+        <div style="font-size: 0.75rem; color: var(--text-2); margin-top: 2px;">01 Aug, 2026</div>
+      </div>
+
+      <!-- Winner 10 -->
+      <div class="winner-card reveal reveal-delay-1">
+        <!-- Replace Winner -->
+        <span class="winner-badge-pos">#1 Place</span>
+        <div class="winner-avatar-wrap">
+          <img src="https://placehold.co/100x100/12142c/a855f7?text=TP" alt="Player Avatar" loading="lazy">
+          <div class="winner-trophy"><svg viewBox="0 0 24 24" fill="none"><path d="M8 21h8m-4-9v9m-5-13h10l-1 7H9l-1-7zM5 6h2a3 3 0 003-3H9a3 3 0 00-3 3zm14 0h-2a3 3 0 01-3-3h2a3 3 0 013 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="winner-name">Tanya_Playz</div>
+        <div class="winner-tourney">Solo Clash Champ</div>
+        <div class="winner-prize">₹1,200</div>
+        <div style="font-size: 0.75rem; color: var(--text-2); margin-top: 2px;">01 Aug, 2026</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Leaderboard (Demo) ===================== -->
+<section id="leaderboard">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Top Competitors</p>
+      <h2>Elite <span class="gradient-text">Leaderboard</span></h2>
+      <p>The top performing players across all Aura Esports tournaments this season.</p>
+    </div>
+    <div class="leaderboard-wrapper reveal">
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Player Name</th>
+            <th>Kills</th>
+            <th>Matches</th>
+            <th>Wins</th>
+            <th>Earnings</th>
+            <th>Win Rate</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="rank-badge">01</span></td>
+            <td>
+              <div class="lb-player">
+                <img src="https://placehold.co/100x100/12142c/ffbf4d?text=RK" alt="Avatar" loading="lazy">
+                <span class="lb-name">Rohit_FF</span>
+              </div>
+            </td>
+            <td>342</td>
+            <td>84</td>
+            <td>28</td>
+            <td><span class="lb-earnings">₹45,200</span></td>
+            <td>33.3%</td>
+            <td><span class="status-pill">Elite</span></td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge">02</span></td>
+            <td>
+              <div class="lb-player">
+                <img src="https://placehold.co/100x100/12142c/00d9ff?text=AS" alt="Avatar" loading="lazy">
+                <span class="lb-name">Ankit_GG</span>
+              </div>
+            </td>
+            <td>310</td>
+            <td>79</td>
+            <td>24</td>
+            <td><span class="lb-earnings">₹38,900</span></td>
+            <td>30.3%</td>
+            <td><span class="status-pill">Pro</span></td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge">03</span></td>
+            <td>
+              <div class="lb-player">
+                <img src="https://placehold.co/100x100/12142c/a855f7?text=PV" alt="Avatar" loading="lazy">
+                <span class="lb-name">Priya_FF</span>
+              </div>
+            </td>
+            <td>289</td>
+            <td>72</td>
+            <td>21</td>
+            <td><span class="lb-earnings">₹32,400</span></td>
+            <td>29.1%</td>
+            <td><span class="status-pill">Pro</span></td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge">04</span></td>
+            <td>
+              <div class="lb-player">
+                <img src="https://placehold.co/100x100/12142c/00d9ff?text=VY" alt="Avatar" loading="lazy">
+                <span class="lb-name">Vikas_Yadav</span>
+              </div>
+            </td>
+            <td>256</td>
+            <td>68</td>
+            <td>18</td>
+            <td><span class="lb-earnings">₹27,500</span></td>
+            <td>26.4%</td>
+            <td><span class="status-pill">Veteran</span></td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge">05</span></td>
+            <td>
+              <div class="lb-player">
+                <img src="https://placehold.co/100x100/12142c/ffbf4d?text=SK" alt="Avatar" loading="lazy">
+                <span class="lb-name">Simran_K</span>
+              </div>
+            </td>
+            <td>230</td>
+            <td>60</td>
+            <td>16</td>
+            <td><span class="lb-earnings">₹24,100</span></td>
+            <td>26.6%</td>
+            <td><span class="status-pill">Veteran</span></td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge">06</span></td>
+            <td>
+              <div class="lb-player">
+                <img src="https://placehold.co/100x100/12142c/a855f7?text=AR" alt="Avatar" loading="lazy">
+                <span class="lb-name">Aditya_R</span>
+              </div>
+            </td>
+            <td>215</td>
+            <td>55</td>
+            <td>14</td>
+            <td><span class="lb-earnings">₹20,800</span></td>
+            <td>25.4%</td>
+            <td><span class="status-pill">Veteran</span></td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge">07</span></td>
+            <td>
+              <div class="lb-player">
+                <img src="https://placehold.co/100x100/12142c/00d9ff?text=NS" alt="Avatar" loading="lazy">
+                <span class="lb-name">Neha_Singh</span>
+              </div>
+            </td>
+            <td>198</td>
+            <td>50</td>
+            <td>12</td>
+            <td><span class="lb-earnings">₹18,300</span></td>
+            <td>24.0%</td>
+            <td><span class="status-pill">Active</span></td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge">08</span></td>
+            <td>
+              <div class="lb-player">
+                <img src="https://placehold.co/100x100/12142c/ffbf4d?text=KM" alt="Avatar" loading="lazy">
+                <span class="lb-name">Karan_Mehta</span>
+              </div>
+            </td>
+            <td>182</td>
+            <td>48</td>
+            <td>10</td>
+            <td><span class="lb-earnings">₹15,600</span></td>
+            <td>20.8%</td>
+            <td><span class="status-pill">Active</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Screenshot Gallery (Demo) ===================== -->
+<section id="screenshots">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Inside The App</p>
+      <h2>See Aura Esports In Action</h2>
+      <p>A closer look at the app your squad will be living in every day. Tap any screen to zoom in.</p>
+    </div>
+    <div class="gallery-track" id="galleryTrack">
+      
+      <!-- Home Screenshot -->
+      <!-- Replace with your original Home Screenshot -->
+      <div class="shot-card reveal" data-caption="Home">
+        <img src="https://user19666.na.imgto.link/public/20260806/1000159992.avif" alt="Home screenshot" loading="lazy">
+        <div class="shot-label"><span>Home</span><span class="shot-zoom"><svg viewBox="0 0 24 24" fill="none"><path d="M10 4a6 6 0 100 12 6 6 0 000-12zm0 0v0M16 16l4 4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg></span></div>
+      </div>
+
+      <!-- Tournament Screenshot -->
+      <!-- Replace with your original Tournament Screenshot -->
+      <div class="shot-card reveal reveal-delay-1" data-caption="Tournament">
+        <img src="https://user19666.na.imgto.link/public/20260806/1000160157.avif" alt="Tournament screenshot" loading="lazy">
+        <div class="shot-label"><span>Tournament</span><span class="shot-zoom"><svg viewBox="0 0 24 24" fill="none"><path d="M10 4a6 6 0 100 12 6 6 0 000-12zm0 0v0M16 16l4 4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg></span></div>
+      </div>
+
+      <!-- Tournament Details Screenshot -->
+      <!-- Replace with your original Tournament Details Screenshot -->
+      <div class="shot-card reveal reveal-delay-2" data-caption="Tournament Details">
+        <img src="https://user19666.na.imgto.link/public/20260806/1000160159.avif" alt="Tournament Details screenshot" loading="lazy">
+        <div class="shot-label"><span>Tournament Details</span><span class="shot-zoom"><svg viewBox="0 0 24 24" fill="none"><path d="M10 4a6 6 0 100 12 6 6 0 000-12zm0 0v0M16 16l4 4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg></span></div>
+      </div>
+
+      <!-- Wallet Screenshot -->
+      <!-- Replace with your original Wallet Screenshot -->
+      <div class="shot-card reveal reveal-delay-3" data-caption="Wallet">
+        <img src="https://user19666.na.imgto.link/public/20260806/1000160160.avif" alt="Wallet screenshot" loading="lazy">
+        <div class="shot-label"><span>Wallet</span><span class="shot-zoom"><svg viewBox="0 0 24 24" fill="none"><path d="M10 4a6 6 0 100 12 6 6 0 000-12zm0 0v0M16 16l4 4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg></span></div>
+      </div>
+
+      <!-- Leaderboard Screenshot -->
+      <!-- Replace with your original Leaderboard Screenshot -->
+      <div class="shot-card reveal" data-caption="Leaderboard">
+        <img src="https://user19666.na.imgto.link/public/20260806/1000160125.avif" alt="Leaderboard screenshot" loading="lazy">
+        <div class="shot-label"><span>Leaderboard</span><span class="shot-zoom"><svg viewBox="0 0 24 24" fill="none"><path d="M10 4a6 6 0 100 12 6 6 0 000-12zm0 0v0M16 16l4 4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg></span></div>
+      </div>
+
+      <!-- Profile Screenshot -->
+      <!-- Replace with your original Profile Screenshot -->
+      <div class="shot-card reveal reveal-delay-1" data-caption="Profile">
+        <img src="https://user19666.na.imgto.link/public/20260806/1000160124.avif" alt="Profile screenshot" loading="lazy">
+        <div class="shot-label"><span>Profile</span><span class="shot-zoom"><svg viewBox="0 0 24 24" fill="none"><path d="M10 4a6 6 0 100 12 6 6 0 000-12zm0 0v0M16 16l4 4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg></span></div>
+      </div>
+
+      <!-- Notifications Screenshot -->
+      <!-- Replace with your original Notifications Screenshot -->
+      <div class="shot-card reveal" data-caption="Notifications">
+        <img src="https://user19666.na.imgto.link/public/20260806/1000160156.avif" alt="Notifications screenshot" loading="lazy">
+        <div class="shot-label"><span>Notifications</span><span class="shot-zoom"><svg viewBox="0 0 24 24" fill="none"><path d="M10 4a6 6 0 100 12 6 6 0 000-12zm0 0v0M16 16l4 4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg></span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Lightbox ===================== -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close preview">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <button class="lightbox-prev" id="lightboxPrev" aria-label="Previous screenshot">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="lightbox-next" id="lightboxNext" aria-label="Next screenshot">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <img id="lightboxImg" src="" alt="Expanded app screenshot">
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+</div>
+
+<!-- ===================== Features ===================== -->
+<section id="features">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Why Aura</p>
+      <h2>Built For Serious <span class="gradient-text">Free Fire</span> Players</h2>
+      <p>Everything you need to compete, win, and get paid — without leaving the app.</p>
+    </div>
+    <div class="feature-grid" id="featureGrid">
+      <!-- Feature cards injected via markup, one per feature -->
+    </div>
+  </div>
+</section>
+
+<!-- ===================== How It Works ===================== -->
+<section id="how-it-works">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Get In The Game</p>
+      <h2>From Sign-Up To <span class="gradient-text">Cash Prize</span></h2>
+      <p>Six steps stand between you and your first payout.</p>
+    </div>
+    <div class="timeline" id="timeline">
+      <div class="timeline-item reveal">
+        <div class="step-node">01</div>
+        <div class="step-body"><p class="step-tag">Step One</p><h3>Create Account</h3><p>Sign up in under a minute with your phone number and Free Fire UID.</p></div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="step-node">02</div>
+        <div class="step-body"><p class="step-tag">Step Two</p><h3>Add Balance</h3><p>Top up your Aura Wallet instantly using UPI, cards, or net banking.</p></div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="step-node">03</div>
+        <div class="step-body"><p class="step-tag">Step Three</p><h3>Join Tournament</h3><p>Pick a Solo, Duo, or Squad tournament that matches your entry budget.</p></div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="step-node">04</div>
+        <div class="step-body"><p class="step-tag">Step Four</p><h3>Receive Room ID &amp; Password</h3><p>Get instant access to your custom room details before match time.</p></div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="step-node">05</div>
+        <div class="step-body"><p class="step-tag">Step Five</p><h3>Play Match</h3><p>Drop in, fight for the crown, and climb the live leaderboard.</p></div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="step-node">06</div>
+        <div class="step-body"><p class="step-tag">Step Six</p><h3>Win Cash Prize</h3><p>Winnings land straight in your wallet — withdraw whenever you want.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Statistics ===================== -->
+<section class="stats-band" id="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal"><strong data-count="10000" data-suffix="+">0</strong><span>Downloads</span></div>
+      <div class="stat-item reveal reveal-delay-1"><strong data-count="5000" data-suffix="+">0</strong><span>Active Players</span></div>
+      <div class="stat-item reveal reveal-delay-2"><strong data-count="1000" data-suffix="+">0</strong><span>Daily Matches</span></div>
+      <div class="stat-item reveal reveal-delay-3"><strong data-count="10" data-suffix=" Lakh+" data-prefix="₹">0</strong><span>Prize Distributed</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Player Reviews ===================== -->
+<section id="reviews">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Player Voices</p>
+      <h2>Trusted By <span class="gradient-text">Thousands</span> Of Players</h2>
+      <p>Real feedback from the Aura Esports community.</p>
+    </div>
+    <div class="review-grid" id="reviewGrid">
+      <!-- Review cards injected via markup below -->
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section id="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Questions</p>
+      <h2>Frequently Asked <span class="gradient-text">Questions</span></h2>
+      <p>Still unsure about something? Here's what most players ask before joining.</p>
+    </div>
+    <div class="faq-list glass" id="faqList">
+      <!-- FAQ items injected via markup -->
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Download CTA ===================== -->
+<section id="download">
+  <div class="container">
+    <div class="download-cta glass reveal">
+      <p class="eyebrow">Ready To Compete?</p>
+      <h2>Your Next Booyah Pays <span class="gradient-text">Real Cash</span></h2>
+      <p>Download Aura Esports, join the Discord for match updates, or reach out if you need help getting started.</p>
+      <div class="download-actions">
+        <!-- Paste your original APK Download Link here -->
+        <a href="https://github.com/rezenstat-boop/Subh/releases/download/v1.0.1/Aura.eSports.apk" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M17.6 12.9a5 5 0 012.6-4.4 5.1 5.1 0 00-4-2.2c-1.7-.2-3.3 1-4.1 1-.9 0-2.2-1-3.6-1a5.4 5.4 0 00-4.5 2.8c-2 3.4-.5 8.4 1.4 11.1 1 1.4 2.1 2.9 3.6 2.8 1.4-.1 2-.9 3.7-.9 1.7 0 2.2.9 3.7.9 1.5 0 2.5-1.3 3.4-2.7a12 12 0 001.5-3.1 4.8 4.8 0 01-3.7-4.3z" stroke="#04040c" stroke-width="1.3" fill="#04040c"/></svg>
+          Android Download
+        </a>
+        <a href="https://github.com/rezenstat-boop/Subh/releases/download/v1.0.1/Aura.eSports.apk" class="btn btn-ghost">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 12a4 4 0 108 0 4 4 0 00-8 0z" stroke="currentColor" stroke-width="1.6"/><path d="M4 18c1-3 4-4 8-4s7 1 8 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          Join Discord
+        </a>
+        <a href="#footer-contact" class="btn btn-gold">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 4h16v16H4V4z" stroke="#241300" stroke-width="1.4"/><path d="M4 6l8 7 8-7" stroke="#241300" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Contact Support
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== Contact Section & Footer ===================== -->
+<footer id="footer-contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <!-- Replace with your Aura Esports Logo -->
+        <a href="https://user19666.na.imgto.link/public/20260806/1000159906.avif" class="brand">
+          <span class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v6c0 5 4 8.5 9 9 5-.5 9-4 9-9V7l-9-5z" stroke="#04040c" stroke-width="1.6"/><path d="M9 12l2 2 4-4" stroke="#04040c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          Aura Esports
+        </a>
+        <p>India's ultimate Free Fire tournament platform. Compete daily, climb the leaderboard, and get paid for your skill.</p>
+        <!-- Replace Social Links -->
+        <div class="social-row">
+          <a href="#" aria-label="Discord"><svg viewBox="0 0 24 24" fill="none"><path d="M8 12a4 4 0 108 0 4 4 0 00-8 0z" stroke="currentColor" stroke-width="1.6"/><path d="M4 18c1-3 4-4 8-4s7 1 8 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="12" rx="4" stroke="currentColor" stroke-width="1.6"/><path d="M10 9l6 3-6 3V9z" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Twitter/X"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#">Join Discord</a></li>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Report an Issue</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+          <li><a href="#">Refund Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Play Responsibly</h4>
+        <ul>
+          <li><a href="#">Responsible Gaming</a></li>
+          <li><a href="#">Age Policy (18+)</a></li>
+          <li><a href="#">Fair Play Rules</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> Aura Esports. All rights reserved.</p>
+      <p>Made for the Free Fire community in India 🇮🇳</p>
+    </div>
+    <p class="disclaimer">Aura Esports is an independent tournament platform and is not affiliated with, endorsed by, or sponsored by Garena or Free Fire. Participation in cash tournaments is intended for eligible users aged 18 and above. Please play responsibly.</p>
+  </div>
+</footer>
+
+<!-- ===================== Back to top ===================== -->
+<button id="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script>
+/* ============================================================
+   AURA ESPORTS — SCRIPT
+   Sections: Data -> Render -> Loader -> Particles -> Nav ->
+   Scroll Reveal -> Counters -> Gallery/Lightbox -> FAQ -> Misc
+   ============================================================ */
+(function(){
+  'use strict';
+
+  /* ---------- Content data (Features, 10 Reviews, FAQs) ---------- */
+  var FEATURES = [
+    { title:'Daily Free Fire Tournaments', desc:'New tournaments launch every single day across every skill level.', icon:'M12 2l2.5 6.5L21 9l-5 4.5L17.5 21 12 17l-5.5 4L8 13.5 3 9l6.5-.5L12 2z' },
+    { title:'Solo, Duo &amp; Squad Matches', desc:'Play your way — jump in alone or team up with your squad.', icon:'M8 12a3 3 0 100-6 3 3 0 000 6zM16 12a3 3 0 100-6 3 3 0 000 6zM3 20c0-3 2.5-5 5-5s5 2 5 5M11 20c0-3 2.5-5 5-5s5 2 5 5' },
+    { title:'Instant Room ID &amp; Password', desc:'Room credentials are delivered to your app the moment the lobby opens.', icon:'M4 11V8a4 4 0 118 0v3M3 11h10v9H3v-9z' },
+    { title:'Secure Wallet', desc:'Bank-grade encryption keeps every rupee in your wallet protected.', icon:'M3 7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7zM16 12h.01M3 9h18' },
+    { title:'Easy Withdrawals', desc:'Cash out your winnings straight to UPI or bank in a couple of taps.', icon:'M12 3v12m0 0l-4-4m4 4l4-4M5 21h14' },
+    { title:'Fast Match Joining', desc:'One-tap entry gets you into the lobby faster than the competition.', icon:'M13 2L4 14h6l-1 8 9-12h-6l1-8z' },
+    { title:'Live Leaderboards', desc:'Track your rank in real time as kills and placements roll in.', icon:'M4 20V10M12 20V4M20 20v-7' },
+    { title:'Referral Rewards', desc:'Invite your friends and earn bonus cash for every squad member added.', icon:'M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87M15 7a4 4 0 11-8 0 4 4 0 018 0z' },
+    { title:'Bonus System', desc:'Daily logins, streaks, and special events unlock extra wallet credit.', icon:'M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8' }
+  ];
+
+  /* 10 Player Reviews as requested */
+  var REVIEWS = [
+    { name:'Rohit Kumar', handle:'@rohit_ff', text:'Aura Esports pays out fast and the room IDs never come in late. My squad plays here every night now.', seed:'RK', color:'00d9ff' },
+    { name:'Ankit Sharma', handle:'@ankit_gg', text:'Best Free Fire tournament app I have used in India. Withdrawals hit my UPI within minutes.', seed:'AS', color:'a855f7' },
+    { name:'Priya Verma', handle:'@priya.ff', text:'Love the leaderboard — keeps me competitive across every solo tournament I join.', seed:'PV', color:'ffbf4d' },
+    { name:'Vikas Yadav', handle:'@vikasplays', text:'Squad matches are smooth, no lag on room entry, and support actually replies quickly.', seed:'VY', color:'00d9ff' },
+    { name:'Simran Kaur', handle:'@simran_kaur', text:'The referral rewards alone got me a free tournament entry every week. Great community.', seed:'SK', color:'a855f7' },
+    { name:'Aditya Rathore', handle:'@aditya_r', text:'Won my first cash prize within a week of joining. The whole flow feels premium and trustworthy.', seed:'AR', color:'ffbf4d' },
+    { name:'Neha Singh', handle:'@neha.gg', text:'Clean app, clear rules, and the wallet system makes topping up and cashing out painless.', seed:'NS', color:'00d9ff' },
+    { name:'Karan Mehta', handle:'@karanm', text:'Daily tournaments keep things fresh. My duo and I grind Aura every single evening.', seed:'KM', color:'a855f7' },
+    { name:'Deepak Joshi', handle:'@deepak_j', text:'Awesome platform for scrims. The level of competition here is top notch!', seed:'DJ', color:'ffbf4d' },
+    { name:'Tanya Patel', handle:'@tanya_p', text:'Super user friendly interface and reliable support team. Highly recommended!', seed:'TP', color:'00d9ff' }
+  ];
+
+  var FAQS = [
+    { q:'How do I join a Free Fire tournament on Aura Esports?', a:'Create your account, add balance to your Aura Wallet, then pick any Solo, Duo, or Squad tournament and confirm your entry. You will receive the Room ID and Password before the match starts.' },
+    { q:'Is it safe to add money to my Aura Wallet?', a:'Yes. All transactions are processed through secure, encrypted payment gateways, and your wallet balance is protected with bank-grade security at every step.' },
+    { q:'How and when do I get the Room ID and Password?', a:'Room credentials are pushed instantly to your app dashboard shortly before the match begins, so you always have time to get ready and join the lobby.' },
+    { q:'How do withdrawals work?', a:'Once your match winnings are credited to your wallet, you can withdraw anytime via UPI or bank transfer. Most withdrawals are processed within minutes.' },
+    { q:'What Free Fire modes can I compete in?', a:'Aura Esports hosts Solo, Duo, and Squad tournaments daily, with different entry fees and prize pools so you can play at whatever stake suits you.' },
+    { q:'Is there a minimum age to play cash tournaments?', a:'Yes, players must be 18 years or older to participate in cash tournaments, in line with our Responsible Gaming policy.' },
+    { q:'What happens if I face an issue during a match?', a:'Our support team is available through in-app chat and Discord to resolve disputes, connection issues, or room-related problems quickly.' },
+    { q:'How does the referral program work?', a:'Share your referral code with friends — once they join and play their first tournament, you both receive bonus wallet credit.' }
+  ];
+
+  /* ---------- Render dynamic sections ---------- */
+  function renderFeatures(){
+    var grid = document.getElementById('featureGrid');
+    var html = '';
+    FEATURES.forEach(function(f, i){
+      var delay = 'reveal-delay-' + ((i % 4) + 1 > 4 ? 4 : (i % 4) + 1);
+      html += '<div class="feature-card glass reveal ' + (i % 4 === 0 ? '' : delay) + '"><!-- Replace Player Review -->' +
+        '<div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="' + f.icon + '"/></svg></div>' +
+        '<h3>' + f.title + '</h3><p>' + f.desc + '</p></div>';
+    });
+    grid.innerHTML = html;
+  }
+
+  function renderReviews(){
+    var grid = document.getElementById('reviewGrid');
+    var starSvg = '<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17l-5.9 3 1.2-6.5L2.5 8.9 9.1 8 12 2z"/></svg>';
+    var html = '';
+    REVIEWS.forEach(function(r, i){
+      var delay = 'reveal-delay-' + ((i % 4) + 1);
+      html += '<div class="review-card glass reveal ' + delay + '"><!-- Replace Player Review -->' +
+        '<div class="review-top"><img src="https://placehold.co/100x100/12142c/' + r.color + '?text=' + r.seed + '" alt="' + r.name + ' avatar" loading="lazy">' +
+        '<div><div class="review-name">' + r.name + '</div><div class="review-handle">' + r.handle + '</div></div></div>' +
+        '<div class="stars">' + starSvg.repeat(5) + '</div>' +
+        '<p class="review-text">&ldquo;' + r.text + '&rdquo;</p></div>';
+    });
+    grid.innerHTML = html;
+  }
+
+  function renderFaqs(){
+    var list = document.getElementById('faqList');
+    var html = '';
+    FAQS.forEach(function(f, i){
+      html += '<div class="faq-item' + (i === 0 ? ' open' : '') + '">' +
+        '<button class="faq-q" aria-expanded="' + (i === 0 ? 'true' : 'false') + '">' + f.q + '<span class="faq-icon"></span></button>' +
+        '<div class="faq-a"><p>' + f.a + '</p></div></div>';
+    });
+    list.innerHTML = html;
+  }
+
+  renderFeatures();
+  renderReviews();
+  renderFaqs();
+
+  /* ---------- Loader ---------- */
+  window.addEventListener('load', function(){
+    var loader = document.getElementById('loader');
+    setTimeout(function(){ loader.classList.add('hidden'); }, 500);
+  });
+  setTimeout(function(){ document.getElementById('loader').classList.add('hidden'); }, 3000);
+
+  /* ---------- Particle network canvas ---------- */
+  (function particles(){
+    var canvas = document.getElementById('particles');
+    var ctx = canvas.getContext('2d');
+    var particlesArr = [];
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var w, h;
+
+    function resize(){
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    var count = Math.min(70, Math.floor((w * h) / 22000));
+    for (var i = 0; i < count; i++){
+      particlesArr.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        r: Math.random() * 1.6 + 0.6
+      });
+    }
+
+    function step(){
+      ctx.clearRect(0, 0, w, h);
+      for (var i = 0; i < particlesArr.length; i++){
+        var p = particlesArr[i];
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0, 217, 255, 0.55)';
+        ctx.fill();
+        for (var j = i + 1; j < particlesArr.length; j++){
+          var q = particlesArr[j];
+          var dx = p.x - q.x, dy = p.y - q.y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 130){
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(q.x, q.y);
+            ctx.strokeStyle = 'rgba(168, 85, 247,' + (0.14 * (1 - dist / 130)) + ')';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+      if (!reduceMotion) requestAnimationFrame(step);
+    }
+    step();
+  })();
+
+  /* ---------- Sticky navbar + active link highlight ---------- */
+  var navbar = document.getElementById('navbar');
+  var navLinks = document.querySelectorAll('.nav-link');
+  var sections = document.querySelectorAll('main section[id], header[id]');
+  var backToTop = document.getElementById('back-to-top');
+
+  function onScroll(){
+    var y = window.scrollY;
+    navbar.classList.toggle('scrolled', y > 40);
+    backToTop.classList.toggle('show', y > 500);
+
+    var current = '';
+    sections.forEach(function(sec){
+      var top = sec.offsetTop - 140;
+      if (y >= top) current = sec.getAttribute('id');
+    });
+    navLinks.forEach(function(link){
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  backToTop.addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+
+  /* ---------- Hero phone screenshot slider ---------- */
+  (function(){
+    var slider = document.getElementById('phoneSlider');
+    if (!slider) return;
+    var slides = Array.prototype.slice.call(slider.querySelectorAll('.phone-slide'));
+    var dotsWrap = document.getElementById('phoneSliderDots');
+    if (!slides.length) return;
+
+    var index = 0;
+    var AUTOPLAY_MS = 3000;
+    var timer = null;
+    var isPaused = false;
+    var dots = [];
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    slides.forEach(function(_, i){
+      var dot = document.createElement('button');
+      dot.className = 'phone-dot';
+      dot.type = 'button';
+      dot.setAttribute('aria-label', 'Show screenshot ' + (i + 1));
+      dot.addEventListener('click', function(){
+        goTo(i);
+        restartAutoplay();
+      });
+      dotsWrap.appendChild(dot);
+      dots.push(dot);
+    });
+
+    function render(){
+      slides.forEach(function(slide, i){
+        slide.classList.toggle('is-active', i === index);
+        slide.classList.toggle('is-prev', i !== index && i < index);
+      });
+      dots.forEach(function(dot, i){ dot.classList.toggle('active', i === index); });
+    }
+
+    function goTo(i){
+      index = (i + slides.length) % slides.length;
+      render();
+    }
+    function next(){ goTo(index + 1); }
+    function prev(){ goTo(index - 1); }
+
+    function startAutoplay(){
+      if (reduceMotion) return;
+      stopAutoplay();
+      timer = setInterval(function(){
+        if (!isPaused) next();
+      }, AUTOPLAY_MS);
+    }
+    function stopAutoplay(){
+      if (timer){ clearInterval(timer); timer = null; }
+    }
+    function restartAutoplay(){ startAutoplay(); }
+
+    /* Pause while user is actively interacting (hover / touch / drag) */
+    slider.addEventListener('mouseenter', function(){ isPaused = true; });
+    slider.addEventListener('mouseleave', function(){ isPaused = false; });
+
+    /* Swipe support (touch + pointer) */
+    var startX = 0, startY = 0, deltaX = 0, dragging = false;
+    var SWIPE_THRESHOLD = 40;
+
+    slider.addEventListener('touchstart', function(e){
+      isPaused = true;
+      dragging = true;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      deltaX = 0;
+    }, { passive:true });
+
+    slider.addEventListener('touchmove', function(e){
+      if (!dragging) return;
+      deltaX = e.touches[0].clientX - startX;
+      var deltaY = e.touches[0].clientY - startY;
+      /* If the gesture is more vertical than horizontal, let the page scroll */
+      if (Math.abs(deltaY) > Math.abs(deltaX)) return;
+    }, { passive:true });
+
+    slider.addEventListener('touchend', function(){
+      if (!dragging) return;
+      dragging = false;
+      if (deltaX > SWIPE_THRESHOLD) prev();
+      else if (deltaX < -SWIPE_THRESHOLD) next();
+      deltaX = 0;
+      isPaused = false;
+    });
+
+    /* Keyboard accessibility */
+    slider.setAttribute('tabindex', '0');
+    slider.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowLeft'){ prev(); restartAutoplay(); }
+      if (e.key === 'ArrowRight'){ next(); restartAutoplay(); }
+    });
+    slider.addEventListener('focus', function(){ isPaused = true; });
+    slider.addEventListener('blur', function(){ isPaused = false; });
+
+    render();
+    startAutoplay();
+  })();
+
+  /* ---------- Mobile nav toggle ---------- */
+  var navToggle = document.getElementById('navToggle');
+  navToggle.addEventListener('click', function(){
+    var open = navbar.classList.toggle('mobile-open');
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  navLinks.forEach(function(link){
+    link.addEventListener('click', function(){
+      navbar.classList.remove('mobile-open');
+      navToggle.classList.remove('open');
+    });
+  });
+
+  /* ---------- Scroll reveal via IntersectionObserver ---------- */
+  var revealObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold:0.15 });
+  document.querySelectorAll('.reveal').forEach(function(el){ revealObserver.observe(el); });
+
+  var timelineObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) entry.target.classList.add('in-view');
+    });
+  }, { threshold:0.4 });
+  document.querySelectorAll('.timeline-item').forEach(function(el){ timelineObserver.observe(el); });
+
+  /* ---------- Animated stat counters ---------- */
+  var counters = document.querySelectorAll('[data-count]');
+  var counterObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      var target = parseInt(el.getAttribute('data-count'), 10);
+      var prefix = el.getAttribute('data-prefix') || '';
+      var suffix = el.getAttribute('data-suffix') || '';
+      var duration = 1800;
+      var startTime = null;
+
+      function tick(ts){
+        if (!startTime) startTime = ts;
+        var progress = Math.min((ts - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var value = Math.floor(eased * target);
+        el.textContent = prefix + value.toLocaleString('en-IN') + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      counterObserver.unobserve(el);
+    });
+  }, { threshold:0.6 });
+  counters.forEach(function(el){ counterObserver.observe(el); });
+
+  /* ---------- Screenshot gallery + lightbox ---------- */
+  var shotCards = document.querySelectorAll('.shot-card');
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var lightboxCaption = document.getElementById('lightboxCaption');
+  var currentIndex = 0;
+
+  function openLightbox(index){
+    currentIndex = index;
+    var card = shotCards[index];
+    var img = card.querySelector('img');
+    lightboxImg.src = img.src.replace('400x720', '500x900');
+    lightboxImg.alt = img.alt;
+    lightboxCaption.textContent = card.getAttribute('data-caption');
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  shotCards.forEach(function(card, i){
+    card.addEventListener('click', function(){ openLightbox(i); });
+  });
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  document.getElementById('lightboxPrev').addEventListener('click', function(){
+    openLightbox((currentIndex - 1 + shotCards.length) % shotCards.length);
+  });
+  document.getElementById('lightboxNext').addEventListener('click', function(){
+    openLightbox((currentIndex + 1) % shotCards.length);
+  });
+  lightbox.addEventListener('click', function(e){
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', function(e){
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') openLightbox((currentIndex - 1 + shotCards.length) % shotCards.length);
+    if (e.key === 'ArrowRight') openLightbox((currentIndex + 1) % shotCards.length);
+  });
+
+  /* ---------- FAQ accordion ---------- */
+  document.getElementById('faqList').addEventListener('click', function(e){
+    var btn = e.target.closest('.faq-q');
+    if (!btn) return;
+    var item = btn.parentElement;
+    var answer = item.querySelector('.faq-a');
+    var wasOpen = item.classList.contains('open');
+
+    document.querySelectorAll('.faq-item.open').forEach(function(openItem){
+      openItem.classList.remove('open');
+      openItem.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      openItem.querySelector('.faq-a').style.maxHeight = null;
+    });
+
+    if (!wasOpen){
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  });
+  window.addEventListener('DOMContentLoaded', function(){
+    var firstAnswer = document.querySelector('.faq-item.open .faq-a');
+    if (firstAnswer) firstAnswer.style.maxHeight = firstAnswer.scrollHeight + 'px';
+  });
+
+  /* ---------- Footer year ---------- */
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+})();
+</script>
+</body>
+</html>
